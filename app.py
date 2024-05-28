@@ -74,7 +74,7 @@ def user_input(user_question):
         , return_only_outputs=True)
 
     import requests
-
+    dup=response
     url = "https://deep-translate1.p.rapidapi.com/language/translate/v2"
 
     payload = {
@@ -93,6 +93,7 @@ def user_input(user_question):
     print(resp)
     print(resp)
     st.write("Reply: ", resp["data"]["translations"]["translatedText"])
+    st.write("English: ", dup)
 
 
 
