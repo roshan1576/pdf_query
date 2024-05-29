@@ -64,7 +64,24 @@ def user_input(user_question):
     embeddings = GoogleGenerativeAIEmbeddings(model = "models/embedding-001")
     
     new_db = FAISS.load_local("faiss_index", embeddings,allow_dangerous_deserialization=True)
-    docs = new_db.similarity_search(user_question)
+    import requests
+
+    url = "https://deep-translate1.p.rapidapi.com/language/translate/v2"
+
+    payload = {
+        "q": response,
+        "source": "te",
+        "target": "en"
+    }
+    headers = {
+        "content-type": "application/json",
+        "X-RapidAPI-Key": "eda5923de4mshd2f68353251ed51p14d85ajsn2bb840bc3f81",
+        "X-RapidAPI-Host": "deep-translate1.p.rapidapi.com"
+    }
+
+    response = requests.post(url, json=payload, headers=headers)
+    user_question=response.json()
+    docs = new_db.similarity_search(user_question["data"]["translations"]["translatedText"])
 
     chain = get_conversational_chain()
 
