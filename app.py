@@ -87,7 +87,7 @@ def user_input(user_question):
 
     
     response = chain(
-        {"input_documents":docs, "question": user_question}
+        {"input_documents":docs, "question": user_question["data"]["translations"]["translatedText"]}
         , return_only_outputs=True)
 
     import requests
