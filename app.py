@@ -69,7 +69,7 @@ def user_input(user_question):
     url = "https://deep-translate1.p.rapidapi.com/language/translate/v2"
 
     payload = {
-        "q": response,
+        "q": user_question,
         "source": "te",
         "target": "en"
     }
@@ -79,8 +79,8 @@ def user_input(user_question):
         "X-RapidAPI-Host": "deep-translate1.p.rapidapi.com"
     }
 
-    response = requests.post(url, json=payload, headers=headers)
-    user_question=response.json()
+    resp = requests.post(url, json=payload, headers=headers)
+    user_question=resp.json()
     docs = new_db.similarity_search(user_question["data"]["translations"]["translatedText"])
 
     chain = get_conversational_chain()
